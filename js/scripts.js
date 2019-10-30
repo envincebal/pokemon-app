@@ -13,23 +13,39 @@ var pokemonRepository = (function () {
     types: ["water"]
   }];
 
-  function add(item) {
-    return repository.push(item);
+  function addListItem(pokemon) {
+    var $pokemonList = document.querySelector("ul");
+    var $listItem = document.createElement("li");
+    var $button = document.createElement("button");
+
+    $button.innerText = pokemon.name;
+    $button.classList.add("list-button");
+    $pokemonList.appendChild($listItem);
+    $listItem.appendChild($button)
+    addListener($button, pokemon);
+  }
+
+  function addListener(button, pokemon) {
+    button.addEventListener("click", () => {
+      showDetails(pokemon);
+    });
+  }
+
+  function showDetails(pokemon) {
+    console.log(pokemon);
   }
 
   function getAll() {
     return repository;
   }
+
   return {
-    add: add,
+    addListItem: addListItem,
     getAll: getAll
   };
 })();
 
+
 pokemonRepository.getAll().forEach(pokemon => {
-  if (pokemon.height > 0.6) {
-    document.write("<p>" + pokemon.name + " (height: " + pokemon.height + ") - Wow, that's big!</p>");
-  } else {
-    document.write("<p>" + pokemon.name + " (height: " + pokemon.height + ")</p>");
-  }
+  pokemonRepository.addListItem(pokemon);
 });
