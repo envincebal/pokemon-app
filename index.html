@@ -4,23 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Simple JS App</title>
-  <link rel="stylesheet" href="./css/style.css">
+  <title>Pokemon List</title>
+  <link rel="stylesheet" href="./dist/styles.min.css">
 </head>
 <body>
+  <header class="header-body">
+    <h1 class="header-title">Pokemon List</h1>
+  </header>
   <ul class="pokemon-list"></ul>
-
   <div class="overlay">
     <div class='modal'>
-      <button class="modal-close">Close</button>
+      <button class="modal-close">X</button>
       <h1 class="pokemon-name"></h1>
-      <img class="pokemon-img" src="" alt="">
-      <p class="height">Height: <span class="pokemon-height"></span></p>
+      <hr>
+      <div class="pokemon-info">
+        <div class="img-div">
+          <img class="pokemon-img" src="">
+        </div>
+      </div>
+      <div class="modal-details">
+        <p class="weight">Weight: <span class="pokemon-weight"></span></p>
+        <br>
+        <p class="height">Height: <span class="pokemon-height"></span></p>
+        <br>
+        <p class="type">Type: <span class="pokemon-type"></span></p>
+      </div>
     </div>
+  </div>
   </div>
   <script src="js/promise-polyfill.js">
   </script>
-  <script src="js/scripts.js"></script>
+  <script src="dist/script.min.js"></script>
 </body>
-
 </html>

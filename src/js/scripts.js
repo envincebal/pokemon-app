@@ -1,7 +1,7 @@
 var pokemonRepository = (() => {
   var repository = [];
-  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
-  var $modalContainer = document.querySelector('.modal');
+  var apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
+  var $modalContainer = document.querySelector(".modal");
   var $overlay = document.querySelector(".overlay");
 
   function loadList() {
@@ -9,10 +9,12 @@ var pokemonRepository = (() => {
       .then(res => res.json())
       .then(pokemonList => {
         var response = pokemonList.results;
-        response.forEach(item => {
+        response.forEach((item, index) => {
+          var nameCapitalized = item.name.charAt(0).toUpperCase() + item.name.slice(1)
           var pokemon = {
-            name: item.name,
-            detailsUrl: item.url
+            name: nameCapitalized,
+            detailsUrl: item.url,
+            index: index + 1
           };
           add(pokemon);
         });
@@ -30,8 +32,17 @@ var pokemonRepository = (() => {
     return fetch(url)
       .then(res => res.json())
       .then(details => {
+        var types = details.types;
+        var typeList = [];
+
+        types.forEach(iterate => {
+          typeList.push(iterate.type.name);
+        })
+
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
+        item.weight = details.weight;
+        item.type = typeList.join(", ");
       }).catch(err => console.log(err))
   }
 
@@ -40,7 +51,7 @@ var pokemonRepository = (() => {
     var $listItem = document.createElement("li");
     var $button = document.createElement("button");
 
-    $button.innerText = pokemon.name;
+    $button.innerText = pokemon.index + ". " + pokemon.name;
     $button.classList.add("list-button");
     $pokemonList.appendChild($listItem);
     $listItem.appendChild($button)
@@ -48,7 +59,7 @@ var pokemonRepository = (() => {
   }
 
   function addListener(button, pokemon) {
-    button.addEventListener("click", (e) => {
+    button.addEventListener("click", () => {
       showDetails(pokemon);
     });
   }
@@ -57,6 +68,9 @@ var pokemonRepository = (() => {
     var $pokemonName = document.querySelector(".pokemon-name");
     var $pokemonImg = document.querySelector(".pokemon-img");
     var $pokemonHeight = document.querySelector(".pokemon-height");
+    var $pokemonWeight = document.querySelector(".pokemon-weight");
+    var $pokemonType = document.querySelector(".pokemon-type");
+
     pokemonRepository.loadDetails(item)
       .then(() => {
         $modalContainer.classList.add("modal-visible");
@@ -65,7 +79,8 @@ var pokemonRepository = (() => {
         $pokemonName.textContent = item.name;
         $pokemonImg.src = item.imageUrl;
         $pokemonHeight.textContent = item.height;
-        console.log(item)
+        $pokemonWeight.textContent = item.weight;
+        $pokemonType.textContent = item.type;
       });
   }
 
@@ -79,15 +94,14 @@ var pokemonRepository = (() => {
     hideDetails();
   });
 
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && $modalContainer.classList.contains('modal-visible')) {
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && $modalContainer.classList.contains("modal-visible")) {
       hideDetails();
     }
   });
 
-  $overlay.addEventListener('click', (e) => {
+  $overlay.addEventListener("click", (e) => {
     var target = e.target;
-    console.log(target);
     if (target === $overlay) {
       hideDetails();
     }
