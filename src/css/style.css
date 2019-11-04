@@ -62,20 +62,20 @@ ul {
 	display: none;
 }
 
-
 .modal-visible {
 	background-color: #fff;
-	margin: auto;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	border-radius: 5px;
+	left: 50%;
+	top: 50%;
+	text-align: center;
 	padding: 10px;
+	position: fixed;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 	max-width: 500px;
 	height: auto;
 	width: 100%;
 	border: 1px solid #000;
+	border-radius: 5px;
 }
 
 .modal-visible img {
@@ -108,7 +108,7 @@ ul {
 }
 
 .modal-details {
-	width: 50%;
+	max-width: 50%;
 	margin: 0;
 	position: absolute;
 	top: 50%;
