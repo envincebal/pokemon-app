@@ -23,7 +23,6 @@ const pokemonRepository = (() => {
       }).catch(err => {
         console.log(err);
       });
-      return pokemonList;
   }
 
   function initListeners (button, pokemon) {
